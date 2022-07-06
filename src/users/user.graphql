@@ -1,0 +1,13 @@
+type User {
+    id: String
+    firstName: String
+    lastName: String
+    password: String
+    email: String
+}
+
+type Query {
+    users: [User]
+    artists: [Artist]
+}
+

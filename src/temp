@@ -1,0 +1,19 @@
+const server = new ApolloServer({
+    typeDefs: schemas,
+    csrfPrevention: true,
+    cache: 'bounded',
+    resolvers,
+    dataSources: () => ({
+        albumAPI: new BaseAPI(API_URLS.ALBUM_API),
+        artistAPI: new BaseAPI(API_URLS.ARTIST_API),
+        genreAPI: new BaseAPI(API_URLS.GENRE_API),
+        bandAPI: new BaseAPI(API_URLS.BAND_API),
+        userAPI: new UserAPI(API_URLS.USER_API),
+        trackAPI: new BaseAPI(API_URLS.TRACK_API),
+        favoritesAPI: new BaseAPI(API_URLS.FAVORITES_API),
+    }),
+    context: ({ req }) => {
+        const token = req.headers.authorization || '';
+        return token;
+    },
+});
