@@ -1,13 +1,20 @@
 type User {
-    id: String
+    id: ID!
     firstName: String
     lastName: String
     password: String
-    email: String
+    email: String!
 }
 
 type Query {
     users: [User]
     artists: [Artist]
+    jwt(email:String,password:String):String
 }
 
+
+
+type Mutation {
+    login(email:String,password:String):String
+    register(firstName: String!,lastName: String!, password: String!,email: String!):User
+}

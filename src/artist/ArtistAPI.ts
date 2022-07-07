@@ -6,13 +6,14 @@ export class ArtistAPI extends RESTDataSource {
         this.baseURL = 'http://localhost:3002/v1/artists';
     }
 
+
     willSendRequest(request:RequestOptions) {
         request.headers.set('Authorization', this.context.token);
     }
 
     async getArtists() {
         const artist = await this.get('/');
-        return artist;
+        return artist.items;
     }
 
 

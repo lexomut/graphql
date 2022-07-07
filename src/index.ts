@@ -13,39 +13,6 @@ import { UserAPI } from './users/UserAPI';
 //   }
 // `;
 
-const users = [
-    {
-        id: '123456',
-        firstName: 'lex',
-        lastName: 'omut',
-        password: '23456',
-        email: 'lex@df.ed'
-    },
-    {
-        id: '12343356',
-        firstName: 'lex1',
-        lastName: 'omut1',
-        password: '234562',
-        email: 'le2x@df.ed'
-    },
-];
-
-const artists = [
-    {
-        id: '234',
-        firstName: '45454grgt',
-        middleName: 'rfrghyj',
-        birthDate: 'rgthyju',
-        birthPlace: 'edfrgthy',
-        country: 'defrgh',
-        bandsIds: ['drgth'],
-        instruments: 'sedfrg'
-    }
-];
-
-
-
-
 const server = new ApolloServer({
     typeDefs: schemas,
     resolvers,
@@ -59,7 +26,7 @@ const server = new ApolloServer({
     },
     context: ({ req }) => {
         const token = req.headers.authorization || '';
-        return { token };
+        return {token};
     },
 });
 

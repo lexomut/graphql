@@ -7,12 +7,20 @@ export class UserAPI extends RESTDataSource {
     }
 
     willSendRequest(request:RequestOptions) {
-        request.headers.set('Authorization', this.context.token);
+        request.headers.set('Authorization', this.context.token);//`Bearer ${this.context.token}`);
     }
 
     async register(body:{}) {
+        console.log('body',body);
         const user = this.post('register',body);
         return user;
+    }
+
+    async login(email:string, password:string) {
+        console.log(email,password);
+        const data = await this.post('/login',{email,password});
+        console.log('data',data);
+        return data.jwt;
     }
 
     // async getMostViewedMovies(limit = 10) {

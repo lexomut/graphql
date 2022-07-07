@@ -7,5 +7,5 @@ type Artist  {
     birthPlace: String
     country: String
     bandsIds: [String]
-    instruments: String
+    instruments: [String]
 }
