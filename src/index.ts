@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server';
 import { ArtistAPI } from './artist/ArtistAPI';
 import { resolvers } from './resolvers';
-import { schemas } from './types';
+import { schemas } from './graphql-types';
 import { UserAPI } from './users/UserAPI';
 // const typeDefs = gql`
 //   type Book {

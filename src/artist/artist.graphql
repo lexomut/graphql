@@ -1,11 +1,18 @@
-type Artist  {
-    id: String
+type Artist {
+    id: ID!
     firstName: String
     secondName: String
     middleName: String
     birthDate: String
     birthPlace: String
     country: String
-    bandsIds: [String]
+    bands: [Band]
     instruments: [String]
 }
+
+type Query {
+    artist(id:ID):Artist
+    artists: [Artist]
+}
+
+
