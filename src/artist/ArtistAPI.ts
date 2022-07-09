@@ -13,7 +13,7 @@ export interface Artist {
     instruments: string[];
 }
 
-export class ArtistAPI extends RESTDataSource {
+export class ArtistApi extends RESTDataSource {
     constructor() {
         super();
         this.baseURL = 'http://localhost:3002/v1/artists';

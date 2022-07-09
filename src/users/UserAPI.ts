@@ -1,6 +1,15 @@
 import { RequestOptions, RESTDataSource } from 'apollo-datasource-rest';
 
-export class UserAPI extends RESTDataSource {
+
+export interface User {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    password: string;
+    email: string;
+}
+
+export class UserApi extends RESTDataSource {
     constructor() {
         super();
         this.baseURL = 'http://localhost:3004/v1/users';
@@ -10,7 +19,7 @@ export class UserAPI extends RESTDataSource {
         request.headers.set('Authorization', this.context.token);//`Bearer ${this.context.token}`);
     }
 
-    async register(body:{}) {
+    async register(body:User) {
         console.log('body',body);
         const user = this.post('register',body);
         return user;
@@ -22,6 +31,12 @@ export class UserAPI extends RESTDataSource {
         console.log('data',data);
         return data.jwt;
     }
+
+
+    async getOnce(id: string): Promise<User> {
+        return await this.get('/' + id);
+    }
+
 
     // async getMostViewedMovies(limit = 10) {
     //     const data = await this.get('movies', {

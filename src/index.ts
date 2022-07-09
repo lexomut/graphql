@@ -1,8 +1,13 @@
 import { ApolloServer } from 'apollo-server';
-import { ArtistAPI } from './artist/ArtistAPI';
+import { ArtistApi } from './artist/ArtistAPI';
 import { resolvers } from './resolvers';
 import { schemas } from './graphql-types';
-import { UserAPI } from './users/UserAPI';
+import { UserApi } from './users/UserAPI';
+import { AlbumApi } from './album/albumApi';
+import { GenreApi } from './genre/genreApi';
+import { FavouritesApi } from './favourites/favouritesApi';
+import { BandApi } from './band/bandApi';
+import { TrackApi } from './track/trackApi';
 // const typeDefs = gql`
 //   type Book {
 //         title: String
@@ -20,8 +25,13 @@ const server = new ApolloServer({
     cache: 'bounded',
     dataSources: () => {
         return {
-            userAPI: new UserAPI(),
-            artistAPI: new ArtistAPI(),
+            userAPI: new UserApi(),
+            artistAPI: new ArtistApi(),
+            genreAPI: new GenreApi(),
+            trackAPI: new TrackApi(),
+            bandAPI: new BandApi(),
+            albumAPI: new AlbumApi(),
+            favouritesAPI: new FavouritesApi()
         };
     },
     context: ({ req }) => {

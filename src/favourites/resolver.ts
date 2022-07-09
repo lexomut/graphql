@@ -1,21 +1,38 @@
-export const artistResolver ={
+import { FavouritesApi } from './favouritesApi';
+
+export const favouritesResolver = {
     Query: {
-        // users: async (parent: any, arg: any, {dataSources}: any) => dataSources.userAPI.getUser(),
-        artists: async (parent: any, arg: any, {dataSources}: any) => await dataSources.artistAPI.getArtists(),
-        // jwt: async (parent: any, {email, password}: any, {dataSources}: any) => {
-        //     return await dataSources.userAPI.login(email, password);
-        // }
+        favouritess: async (parent: any, arg: any, {dataSources}: any) => {
+            const res = await dataSources.favouritesAPI.getAll();
+            return res;
+        },
+        favourites: async (parent: any, arg: any, {dataSources}: any) => {
+            const res =    await dataSources.favouritesAPI.getOnce(arg);
+            return res;
+        }
     },
     Mutation: {
-        // async login(parent: any, {email, password}: any, context: any) {
-        //     return await context.dataSources.userAPI.login(email, password);
-        // },
-        // async register(parent: any, data: any, context: any) {
-        //     const res = await context.dataSources.userAPI.register(data);
-        //     if (res) {
-        //         return {id: res._id, ...res};
-        //     }
-        // },
+        async createFavourites(parent: any, {data}: any, context: any) {
+            if (!context.token) {
+                throw new Error('no Token');
+            }
+            const res =await context.dataSources.favouritesAPI.create(data);
+            return res;
+        },
+        async updateFavourites(parent: any, {id, data}: any, context: any) {
+            if (!context.token) {
+                throw new Error('no Token');
+            }
+            const res =await context.dataSource.favouritesAPI.update(id, data);
+            return res;
+        },
+        async deleteFavourites(parent: any, data: any, context: any) {
+            if (!context.token) {
+                throw new Error('no Token');
+            }
+            const res =await context.dataSources.favouritesAPI.delete(data);
+            return res;
+        }
     },
 };
 

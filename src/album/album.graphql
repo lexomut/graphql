@@ -10,5 +10,28 @@ type Album {
 }
 
 type Query {
-    album: [Album]
+    albums: [Album]
+    album(id:ID):Album
+}
+
+type Mutation {
+    createAlbum(album:CreateAlbum):Album
+    deleteAlbum(id:ID!):ID
+    updateAlbum(id:ID!,album:UpdateAlbum):Album
+}
+
+input UpdateAlbum{
+    name:String
+    released:Int
+    artistsIds:[ID]
+    bandsIds:[ID]
+    trackIds:[ID]
+}
+
+input CreateAlbum {
+    name:String!
+    released:Int
+    artistsIds:[ID]
+    bandsIds:[ID]
+    trackIds:[ID]
 }

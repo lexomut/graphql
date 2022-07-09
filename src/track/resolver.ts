@@ -1,21 +1,38 @@
-export const artistResolver ={
+import { TrackApi } from './trackApi';
+
+export const trackResolver = {
     Query: {
-        // users: async (parent: any, arg: any, {dataSources}: any) => dataSources.userAPI.getUser(),
-        artists: async (parent: any, arg: any, {dataSources}: any) => await dataSources.artistAPI.getArtists(),
-        // jwt: async (parent: any, {email, password}: any, {dataSources}: any) => {
-        //     return await dataSources.userAPI.login(email, password);
-        // }
+        tracks: async (parent: any, arg: any, {dataSources}: any) => {
+            const res = await dataSources.trackAPI.getAll();
+            return res;
+        },
+        track: async (parent: any, arg: any, {dataSources}: any) => {
+            const res =    await dataSources.trackAPI.getOnce(arg);
+            return res;
+        }
     },
     Mutation: {
-        // async login(parent: any, {email, password}: any, context: any) {
-        //     return await context.dataSources.userAPI.login(email, password);
-        // },
-        // async register(parent: any, data: any, context: any) {
-        //     const res = await context.dataSources.userAPI.register(data);
-        //     if (res) {
-        //         return {id: res._id, ...res};
-        //     }
-        // },
+        async createTrack(parent: any, {data}: any, context: any) {
+            if (!context.token) {
+                throw new Error('no Token');
+            }
+            const res =await context.dataSources.trackAPI.create(data);
+            return res;
+        },
+        async updateTrack(parent: any, {id, data}: any, context: any) {
+            if (!context.token) {
+                throw new Error('no Token');
+            }
+            const res =await context.dataSource.trackAPI.update(id, data);
+            return res;
+        },
+        async deleteTrack(parent: any, data: any, context: any) {
+            if (!context.token) {
+                throw new Error('no Token');
+            }
+            const res =await context.dataSources.trackAPI.delete(data);
+            return res;
+        }
     },
 };
 
