@@ -4,28 +4,40 @@ export const favouritesResolver = {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res = await context.dataSources.favouritesAPI.getAll();
-            return res;
+            const result = await context.dataSources.favouritesAPI.getAll();
+            return result;
         }
     },
     Mutation: {
-        async addFavourites(parent: any, {data}: any, context: any) {
-            if (!context.token) {
-                throw new Error('no Token');
-            }
-            const res = await context.dataSources.favouritesAPI.add(data);
-            return res;
+        addGenreToFavourites(parent: any, arg: any, context: any) {
+            return addFavourites(parent, arg, context, 'genres');
+        },
+        addArtistToFavourites(parent: any, arg: any, context: any) {
+            return addFavourites(parent, arg, context, 'artists');
+        },
+        addBandToFavourites(parent: any, arg: any, context: any) {
+            return addFavourites(parent, arg, context, 'bands');
+        },
+        addTrackToFavourites(parent: any, arg: any, context: any) {
+            return addFavourites(parent, arg, context, 'tracks');
         },
 
-        async removeFavourites(parent: any, {data}: any, context: any) {
-            if (!context.token) {
-                throw new Error('no Token');
-            }
-            const res = await context.dataSources.favouritesAPI.remove(data);
-            return res;
+        removeGenreToFavourites(parent: any, arg: any, context: any) {
+            return removeFavourites(parent, arg, context, 'genres');
         },
+        removeArtistToFavourites(parent: any, arg: any, context: any) {
+            return removeFavourites(parent, arg, context, 'artists');
+        },
+        removeBandToFavourites(parent: any, arg: any, context: any) {
+            return removeFavourites(parent, arg, context, 'bands');
+        },
+        removeTrackToFavourites(parent: any, arg: any, context: any) {
+            return removeFavourites(parent, arg, context, 'tracks');
+        },
+
 
     },
+
     Favourites: {
         genres(parent: any, arg: any, {dataSources}: any) {
             return Promise.all(parent.genres.map((id: any) => dataSources.genreAPI.getOnce(id)));
@@ -35,14 +47,30 @@ export const favouritesResolver = {
         },
 
         async artists(parent: any, arg: any, {dataSources}: any) {
-            const res = await Promise.all(parent.artists.map((id: any) => dataSources.artistAPI.getOnce(id)));
-            return res;
+            const result = await Promise.all(parent.artists.map((id: any) => dataSources.artistAPI.getOnce(id)));
+            return result;
         },
         async tracks(parent: any, arg: any, {dataSources}: any) {
-            const res = await Promise.all(parent.tracks.map((id: any) => dataSources.trackAPI.getOnce(id)));
-            return res;
+            const result = await Promise.all(parent.tracks.map((id: any) => dataSources.trackAPI.getOnce(id)));
+            return result;
         },
 
     }
 };
+
+async function addFavourites(parent: any, {id}: any, context: any, type: string) {
+    if (!context.token) {
+        throw new Error('no Token');
+    }
+    const result = await context.dataSources.favouritesAPI.add({id, type});
+    return result;
+}
+
+async function removeFavourites(parent: any, {id}: any, context: any, type: string) {
+    if (!context.token) {
+        throw new Error('no Token');
+    }
+    const result = await context.dataSources.favouritesAPI.remove({id, type});
+    return result;
+}
 

@@ -20,15 +20,12 @@ export class UserApi extends RESTDataSource {
     }
 
     async register(body:User) {
-        console.log('body',body);
         const user = this.post('register',body);
         return user;
     }
 
     async login(email:string, password:string) {
-        console.log(email,password);
         const data = await this.post('/login',{email,password});
-        console.log('data',data);
         return data.jwt;
     }
 

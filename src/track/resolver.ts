@@ -1,4 +1,4 @@
-import { TrackApi } from './trackApi';
+
 
 export const trackResolver = {
     Query: {
@@ -12,11 +12,12 @@ export const trackResolver = {
         }
     },
     Mutation: {
-        async createTrack(parent: any, {track}: any, context: any) {
+
+        async createTrack(parent: any, arg: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSources.trackAPI.create(track);
+            const res = await context.dataSources.trackAPI.create(arg.track);
             return res;
         },
         async updateTrack(parent: any, {id, track}: any, context: any) {

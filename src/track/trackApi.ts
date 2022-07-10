@@ -50,9 +50,7 @@ export class TrackApi extends RESTDataSource {
     }
 
     async create(body:{}):Promise<any> {
-        if (!this.context.token) {
-            return;
-        }
+
         const item = await this.post('/',body);
         return Object.assign(item, {
             id:item._id,
@@ -60,8 +58,9 @@ export class TrackApi extends RESTDataSource {
             bands:  item.bandsIds,
             tracks: item.trackIds,
             genres:  item.genresIds,
-            album:item.albumId
+            album: item.albumId
         });
+
     }
 
     async update(id:string,body:any):Promise<any> {

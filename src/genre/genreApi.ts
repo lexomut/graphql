@@ -31,9 +31,6 @@ export class GenreApi extends RESTDataSource {
     }
 
     async create(body:{}):Promise<any> {
-        if (!this.context.token) {
-            return;
-        }
         const result = await this.post('/',body);
         return {...result, id:result._id};
     }

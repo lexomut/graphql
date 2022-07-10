@@ -29,19 +29,18 @@ type Mutation {
 
 input UpdateBand{
     name:String
-    released:Int
-    artistsIds:[ID]
-    bandsIds:[ID]
-    trackIds:[ID]
+    origin: String
     members: [ID]
+    genresIds:[ID]
+    website: String
 }
 
+
 input CreateBand {
-    name:String!
-    released:Int
-    artistsIds:[ID]
-    bandsIds:[ID]
-    trackIds:[ID]
+    name:String
+    origin: String
     members: [ID]
+    genresIds:[ID]
+    website: String
 }
 

@@ -45,7 +45,6 @@ export class ArtistApi extends RESTDataSource {
     }
 
     async getOnce(id:string):Promise<ArtistQl> {
-        console.log(id);
         const item:Artist = await this.get('/'+ id);
         return Object.assign(item,{id:item._id,bands:item.bandsIds});
     }
