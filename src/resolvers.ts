@@ -1,10 +1,10 @@
-import { albumResolver } from './album/resolver';
-import { artistResolver } from './artist/resolver';
-import { bandResolver } from './band/resolver';
-import { favouritesResolver } from './favourites/resolver';
-import { genreResolver } from './genre/resolver';
-import { trackResolver } from './track/resolver';
-import { userResolver } from './users/resolver';
+import { albumResolver } from './modules/album/resolver';
+import { artistResolver } from './modules/artist/resolver';
+import { bandResolver } from './modules/band/resolver';
+import { favouritesResolver } from './modules/favourites/resolver';
+import { genreResolver } from './modules/genre/resolver';
+import { trackResolver } from './modules/track/resolver';
+import { userResolver } from './modules/users/resolver';
 
 export const resolvers = {
     Query: {

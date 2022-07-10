@@ -22,16 +22,13 @@ export class FavouritesApi extends RESTDataSource {
 
     async getAll():Promise<any> {
         const all = await this.get('/');
-        const result= all.items.map((item:any) => {
-            return Object.assign(item, {
-                id:item._id,
-                artists: item.artistsIds,
-                bands:  item.bandsIds,
-                tracks: item.trackIds,
-                genres:  item.genresIds
-            });
+        return Object.assign(all, {
+            id: all._id,
+            artists: all.artistsIds,
+            bands: all.bandsIds,
+            tracks: all.trackIds,
+            genres: all.genresIds
         });
-        return result;
     }
 
 

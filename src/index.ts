@@ -1,22 +1,16 @@
 import { ApolloServer } from 'apollo-server';
-import { ArtistApi } from './artist/ArtistAPI';
+import { ArtistApi } from './modules/artist/ArtistAPI';
 import { resolvers } from './resolvers';
 import { schemas } from './graphql-types';
-import { UserApi } from './users/UserAPI';
-import { AlbumApi } from './album/albumApi';
-import { GenreApi } from './genre/genreApi';
-import { FavouritesApi } from './favourites/favouritesApi';
-import { BandApi } from './band/bandApi';
-import { TrackApi } from './track/trackApi';
-// const typeDefs = gql`
-//   type Book {
-//         title: String
-//     author: String
-//   }
-//   type Query {
-//     books: [Book]
-//   }
-// `;
+import { UserApi } from './modules/users/UserAPI';
+import { AlbumApi } from './modules/album/albumApi';
+import { GenreApi } from './modules/genre/genreApi';
+import { FavouritesApi } from './modules/favourites/favouritesApi';
+import { BandApi } from './modules/band/bandApi';
+import { TrackApi } from './modules/track/trackApi';
+import 'dotenv/config';
+
+const port = process.env.port ||4000;
 
 const server = new ApolloServer({
     typeDefs: schemas,
@@ -40,6 +34,6 @@ const server = new ApolloServer({
     },
 });
 
-server.listen().then(({url}) => {
+server.listen(port).then(({url}) => {
     console.log(`🚀  Server ready at ${url}`);
 });

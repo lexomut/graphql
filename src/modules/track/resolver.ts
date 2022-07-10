@@ -49,7 +49,6 @@ export const trackResolver = {
         },
 
         album: async (parent: any, arg: any, {dataSources}: any) => {
-            console.log(parent.id);
             const res = await dataSources.albumAPI.getOnce(parent.id);
             return res;
         }
