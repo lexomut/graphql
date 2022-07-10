@@ -18,27 +18,40 @@ export class AlbumApi extends RESTDataSource {
     }
 
     willSendRequest(request: RequestOptions) {
+
         request.headers.set('Authorization', this.context.token);
     }
 
     async getAll():Promise<any> {
-        const all = await this.get('/');
-        const result= all.items.map((item:any) => Object.assign({},item, {id:item._id}));
-        console.log('result',result);
+        const all = await this.get('');
+        const result= all.items.map((item:any) => {
+            return Object.assign(item, {
+                id:item._id,
+                artists: item.artistsIds,
+                bands:  item.bandsIds,
+                tracks: item.trackIds,
+                genres:  item.genresIds
+            });
+        });
         return result;
-
     }
 
     async getOnce(id:string):Promise<any> {
-        const result = await this.get('/'+ id);
-        return {...result, id:result._id};
+        const item = await this.get('/'+ id);
+        return Object.assign(item, {
+            id:item._id,
+            artists: item.artistsIds,
+            bands:  item.bandsIds,
+            tracks: item.trackIds,
+            genres:  item.genresIds
+        });
     }
 
     async create(body:{}):Promise<any> {
         if (!this.context.token) {
             return;
         }
-        const result = await this.post('/',body);
+        const result = await this.post('',body);
         return {...result, id:result._id};
     }
 

@@ -23,12 +23,30 @@ export class TrackApi extends RESTDataSource {
 
     async getAll():Promise<any> {
         const all = await this.get('/');
-        return all.items.map((item:any) => Object.assign({},item, {id:item._id}));
+        const result= all.items.map((item:any) => {
+            return Object.assign(item, {
+                id:item._id,
+                artists: item.artistsIds,
+                bands:  item.bandsIds,
+                tracks: item.trackIds,
+                genres:  item.genresIds,
+                album:item.albumId
+            });
+        });
+        return result;
     }
 
+
     async getOnce(id:string):Promise<any> {
-        const result = await this.get('/'+ id);
-        return {...result, id:result._id};
+        const item = await this.get('/'+ id);
+        return Object.assign(item, {
+            id:item._id,
+            artists: item.artistsIds,
+            bands:  item.bandsIds,
+            tracks: item.trackIds,
+            genres:  item.genresIds,
+            album:item.albumId
+        });
     }
 
     async create(body:{}):Promise<any> {

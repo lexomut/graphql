@@ -8,5 +8,24 @@ type Favourites {
 }
 
 type Query {
+    favourite(id:ID):Favourites
     favourites: [Favourites]
 }
+
+type Mutation {
+    addFavourites(chengefavourites:ChengeFavourites):Favourites
+    removeFavourites(chengefavourites:ChengeFavourites):Favourites
+}
+
+input ChengeFavourites {
+    type: AllowedTypes!
+    id: [ID]!
+}
+
+enum AllowedTypes {
+    bands
+    genres
+    artists
+    tracks
+}
+

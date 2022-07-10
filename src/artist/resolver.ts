@@ -6,7 +6,7 @@ export const artistResolver = {
             return res;
         },
         artist: async (parent: any, arg: any, {dataSources}: any) => {
-            const res =    await dataSources.artistAPI.getOnce(arg);
+            const res =    await dataSources.artistAPI.getOnce(arg.id);
             return res;
         }
     },
@@ -33,5 +33,10 @@ export const artistResolver = {
             return res;
         }
     },
+    Artist: {
+        bands(parent: any, arg: any, {dataSources}: any) {
+            return Promise.all(parent.bands.map((id:any) => dataSources.bandAPI.getOnce(id)) );
+        }
+    }
 };
 

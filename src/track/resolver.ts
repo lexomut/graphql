@@ -7,7 +7,7 @@ export const trackResolver = {
             return res;
         },
         track: async (parent: any, arg: any, {dataSources}: any) => {
-            const res =    await dataSources.trackAPI.getOnce(arg);
+            const res =    await dataSources.trackAPI.getOnce(arg.id);
             return res;
         }
     },
@@ -34,5 +34,24 @@ export const trackResolver = {
             return res;
         }
     },
+    Track:{
+        genres(parent: any, arg: any, {dataSources}: any) {
+            return Promise.all(parent.genres.map((id: any) => dataSources.genreAPI.getOnce(id)));
+        },
+        bands(parent: any, arg: any, {dataSources}: any) {
+            return Promise.all(parent.bands.map((id: any) => dataSources.bandAPI.getOnce(id)));
+        },
+
+        async artists(parent: any, arg: any, {dataSources}: any) {
+            const res = await Promise.all(parent.artists.map((id: any) => dataSources.artistAPI.getOnce(id)));
+            return res;
+        },
+
+        album: async (parent: any, arg: any, {dataSources}: any) => {
+            console.log(parent.id);
+            const res = await dataSources.albumAPI.getOnce(parent.id);
+            return res;
+        }
+    }
 };
 

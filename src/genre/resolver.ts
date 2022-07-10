@@ -7,7 +7,7 @@ export const genreResolver = {
             return res;
         },
         genre: async (parent: any, arg: any, {dataSources}: any) => {
-            const res =    await dataSources.genreAPI.getOnce(arg);
+            const res =    await dataSources.genreAPI.getOnce(arg.id);
             return res;
         }
     },
@@ -34,5 +34,6 @@ export const genreResolver = {
             return res;
         }
     },
+    Genre:{}
 };
 

@@ -22,31 +22,32 @@ export class FavouritesApi extends RESTDataSource {
 
     async getAll():Promise<any> {
         const all = await this.get('/');
-        return all.items.map((item:any) => Object.assign({},item, {id:item._id}));
+        const result= all.items.map((item:any) => {
+            return Object.assign(item, {
+                id:item._id,
+                artists: item.artistsIds,
+                bands:  item.bandsIds,
+                tracks: item.trackIds,
+                genres:  item.genresIds
+            });
+        });
+        return result;
     }
 
-    async getOnce(id:string):Promise<any> {
-        const result = await this.get('/'+ id);
-        return {...result, id:result._id};
-    }
 
-    async create(body:{}):Promise<any> {
+    async add(data:any):Promise<any> {
         if (!this.context.token) {
             return;
         }
-        const result = await this.post('/',body);
-        return {...result, id:result._id};
+        const result = await this.put('/add',data);
+        return result;
     }
 
-    async update(id:string,body:any):Promise<any> {
-        const result = await this.post('/'+id,body);
-        return {...result, id:result._id};
-    }
-
-    async delete(id:string):Promise<any> {
+    async remove(data:any):Promise<any> {
         if (!this.context.token) {
             return;
         }
-        return await this.delete('/'+id);
+        const result = await this.put('/remove',data);
+        return result;
     }
 }

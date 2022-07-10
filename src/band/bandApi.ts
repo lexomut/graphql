@@ -4,12 +4,22 @@ export interface Band {
     _id: string;
     name: string;
     origin: string;
-    membersId: Member[];
+    members: Member[];
     website: string;
     genresIds: string[];
 }
 
+export type BandQl = {
+    id: string
+    name: string
+    origin: string
+    members: Member[]
+    website: string
+    genres: string[]
+}
+
 export interface Member {
+    _id:string
     artistId: string
     instrument: string
     years: string[]
@@ -22,37 +32,46 @@ export class BandApi extends RESTDataSource {
     }
 
 
-    willSendRequest(request:RequestOptions) {
+    willSendRequest(request: RequestOptions) {
         request.headers.set('Authorization', this.context.token);
     }
 
-    async getAll():Promise<any> {
-        const all = await this.get('/');
-        return all.items.map((item:any) => Object.assign({},item, {id:item._id}));
+    async getAll(): Promise<Band[]> {
+        const {items}:{items:Band[]} = await this.get('/');
+        return items.map((item: Band) => {
+            return Object.assign(item, {id: item._id, genresIds: item.genresIds, members: item.members.map( member => Object.assign(member,{id:member._id}))});
+        });
     }
 
-    async getOnce(id:string):Promise<any> {
-        const result = await this.get('/'+ id);
-        return {...result, id:result._id};
+    async getOnce(id: string): Promise<BandQl> {
+        const item: Band = await this.get('/' + id);
+        return {
+            id: item._id,
+            name: item.name,
+            origin: item.origin,
+            members: item.members.map( member => Object.assign(member,{id:member._id})),
+            website: item.website,
+            genres: item.genresIds,
+        };
     }
 
-    async create(body:{}):Promise<any> {
+    async create(body: {}): Promise<any> {
         if (!this.context.token) {
             return;
         }
-        const result = await this.post('/',body);
-        return {...result, id:result._id};
+        const result = await this.post('/', body);
+        return {...result, id: result._id};
     }
 
-    async update(id:string,body:any):Promise<any> {
-        const result = await this.post('/'+id,body);
-        return {...result, id:result._id};
+    async update(id: string, body: any): Promise<any> {
+        const result = await this.post('/' + id, body);
+        return {...result, id: result._id};
     }
 
-    async delete(id:string):Promise<any> {
+    async delete(id: string): Promise<any> {
         if (!this.context.token) {
             return;
         }
-        return await this.delete('/'+id);
+        return await this.delete('/' + id);
     }
 }

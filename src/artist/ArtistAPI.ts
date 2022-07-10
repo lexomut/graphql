@@ -1,5 +1,6 @@
 import { RequestOptions, RESTDataSource } from 'apollo-datasource-rest';
 import { ID } from 'graphql-modules/shared/types';
+import { BandQl } from '../band/bandApi';
 
 export interface Artist {
     _id: string;
@@ -13,6 +14,18 @@ export interface Artist {
     instruments: string[];
 }
 
+type ArtistQl = {
+    id: string
+    firstName: string
+    secondName: string
+    middleName: string
+    birthDate: string
+    birthPlace: string
+    country: string
+    bands: string[]
+    instruments: string[]
+}
+
 export class ArtistApi extends RESTDataSource {
     constructor() {
         super();
@@ -24,13 +37,17 @@ export class ArtistApi extends RESTDataSource {
         request.headers.set('Authorization', this.context.token);
     }
 
-    async getAll():Promise<Artist[]> {
-        const all = await this.get('/');
-        return all.items;
+    async getAll():Promise<ArtistQl[]> {
+        const {items}:{items:Artist[]} = await this.get('/');
+        return items.map((item:Artist) => {
+            return Object.assign(item,{id:item._id,bands:item.bandsIds});
+        });
     }
 
-    async getOnce(id:string):Promise<Artist> {
-        return await this.get('/'+ id);
+    async getOnce(id:string):Promise<ArtistQl> {
+        console.log(id);
+        const item:Artist = await this.get('/'+ id);
+        return Object.assign(item,{id:item._id,bands:item.bandsIds});
     }
 
     async create(body:{}) {
