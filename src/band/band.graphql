@@ -23,7 +23,7 @@ type Member {
 
 type Mutation {
     createBand(band:CreateBand):Band
-    deleteBand(id:ID!):ID
+    deleteBand(id:ID!):Int
     updateBand(id:ID!,band:UpdateBand):Band
 }
 

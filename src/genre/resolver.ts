@@ -12,25 +12,25 @@ export const genreResolver = {
         }
     },
     Mutation: {
-        async createGenre(parent: any, {data}: any, context: any) {
+        async createGenre(parent: any, {track}: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSources.genreAPI.create(data);
+            const res =await context.dataSources.genreAPI.create(track);
             return res;
         },
         async updateGenre(parent: any, {id, data}: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSource.genreAPI.update(id, data);
+            const res =await context.dataSources.genreAPI.update(id, data);
             return res;
         },
         async deleteGenre(parent: any, data: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSources.genreAPI.delete(data);
+            const res =await context.dataSources.genreAPI.delete(data.id);
             return res;
         }
     },

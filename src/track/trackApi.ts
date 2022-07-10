@@ -53,19 +53,31 @@ export class TrackApi extends RESTDataSource {
         if (!this.context.token) {
             return;
         }
-        const result = await this.post('/',body);
-        return {...result, id:result._id};
+        const item = await this.post('/',body);
+        return Object.assign(item, {
+            id:item._id,
+            artists: item.artistsIds,
+            bands:  item.bandsIds,
+            tracks: item.trackIds,
+            genres:  item.genresIds,
+            album:item.albumId
+        });
     }
 
     async update(id:string,body:any):Promise<any> {
-        const result = await this.post('/'+id,body);
-        return {...result, id:result._id};
+        const item = await this.put('/'+id,body);
+        return Object.assign(item, {
+            id:item._id,
+            artists: item.artistsIds,
+            bands:  item.bandsIds,
+            tracks: item.trackIds,
+            genres:  item.genresIds,
+            album:item.albumId
+        });
     }
 
-    async delete(id:string):Promise<any> {
-        if (!this.context.token) {
-            return;
-        }
-        return await this.delete('/'+id);
+    async remove(id:string):Promise<any> {
+        const {deletedCount} = await this.delete('/'+id);
+        return deletedCount;
     }
 }

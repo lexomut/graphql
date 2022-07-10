@@ -15,9 +15,9 @@ type Query {
 }
 
 type Mutation {
-    createAlbum( name:String!,released:Int,artistsIds:[ID], bandsIds:[ID],  trackIds:[ID]):Album
-    deleteAlbum(id:ID!):ID
-    updateAlbum(id:ID!,album:UpdateAlbum):Album
+    createAlbum(album:CreateAlbum):Album
+    deleteAlbum(id:ID):Int
+    updateAlbum(id:ID,album:UpdateAlbum):Album
 }
 
 input UpdateAlbum{

@@ -13,29 +13,30 @@ export const albumResolver = {
     Mutation: {
         async createAlbum(parent: any, data: any, context: any) {
             if (!context.token) {
-                console.log('no Token');
                 throw new Error('no Token');
             }
-            console.log('data',data);
-            const res =await context.dataSources.albumAPI.create(data);
-            console.log('res',res);
+            const res =await context.dataSources.albumAPI.create(data.album);
             return res;
         },
-        async updateAlbum(parent: any, {id, data}: any, context: any) {
+        async updateAlbum(parent: any, {id, album}: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSource.albumAPI.update(id, data);
+            const res =await context.dataSources.albumAPI.update(id, album);
             return res;
         },
-        async deleteAlbum(parent: any, data: any, context: any) {
+
+
+        async  deleteAlbum(parent: any, data: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSources.albumAPI.delete(data);
+            const res = await context.dataSources.albumAPI.remove(data.id);
             return res;
         }
     },
+
+
     Album:{
         async artists(parent: any, arg: any, {dataSources}: any) {
             const res = await Promise.all(parent.artists.map((id: any) => dataSources.artistAPI.getOnce(id)));

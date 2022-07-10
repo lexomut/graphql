@@ -36,18 +36,26 @@ export class FavouritesApi extends RESTDataSource {
 
 
     async add(data:any):Promise<any> {
-        if (!this.context.token) {
-            return;
-        }
-        const result = await this.put('/add',data);
-        return result;
+        const item = await this.put('/add',data);
+        return {
+            ...item,
+            id:item._id,
+            bands:item.bandsIds,
+            genres:item.genresIds,
+            artists:item.artistsIds,
+            tracks:item.tracksIds,
+        };
     }
 
     async remove(data:any):Promise<any> {
-        if (!this.context.token) {
-            return;
-        }
-        const result = await this.put('/remove',data);
-        return result;
+        const item = await this.put('/remove',data);
+        return {
+            ...item,
+            id:item._id,
+            bands:item.bandsIds,
+            genres:item.genresIds,
+            artists:item.artistsIds,
+            tracks:item.tracksIds,
+        };
     }
 }

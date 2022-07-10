@@ -12,25 +12,25 @@ export const bandResolver = {
         }
     },
     Mutation: {
-        async createBand(parent: any, {data}: any, context: any) {
+        async createBand(parent: any, {band}: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res = await context.dataSources.bandAPI.create(data);
+            const res = await context.dataSources.bandAPI.create(band);
             return res;
         },
-        async updateBand(parent: any, {id, data}: any, context: any) {
+        async updateBand(parent: any, {id, band}: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res = await context.dataSource.bandAPI.update(id, data);
+            const res = await context.dataSources.bandAPI.update(id, band);
             return res;
         },
         async deleteBand(parent: any, data: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res = await context.dataSources.bandAPI.delete(data);
+            const res = await context.dataSources.bandAPI.remove(data.id);
             return res;
         }
     },

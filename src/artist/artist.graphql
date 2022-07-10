@@ -16,9 +16,9 @@ type Query {
 }
 
 type Mutation {
-    createArtist(album:CreateArtist):Artist
-    deleteArtist(id:ID!):ID
-    updateArtist(id:ID!,album:UpdateArtist):Artist
+    createArtist(artist:CreateArtist):Artist
+    deleteArtist(id:ID!):Int
+    updateArtist(id:ID!,artist:UpdateArtist):Artist
 }
 
 input UpdateArtist{
@@ -28,7 +28,7 @@ input UpdateArtist{
     birthDate: String
     birthPlace: String
     country: String
-    bands: [ID]
+    bandsIds: [ID]
     instruments: [ID]
 }
 
@@ -39,6 +39,6 @@ input CreateArtist{
     birthDate: String
     birthPlace: String
     country: String!
-    bands: [ID]
+    bandsIds: [ID]
     instruments: [ID]
 }

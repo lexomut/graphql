@@ -39,14 +39,12 @@ export class GenreApi extends RESTDataSource {
     }
 
     async update(id:string,body:any):Promise<any> {
-        const result = await this.post('/'+id,body);
+        const result = await this.put('/'+id,body);
         return {...result, id:result._id};
     }
 
-    async delete(id:string):Promise<any> {
-        if (!this.context.token) {
-            return;
-        }
-        return await this.delete('/'+id);
+    async remove(id:string):Promise<any> {
+        const {deletedCount} = await this.delete('/'+id);
+        return deletedCount;
     }
 }

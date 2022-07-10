@@ -13,8 +13,8 @@ type Query {
 }
 
 type Mutation {
-    addFavourites(chengefavourites:ChengeFavourites):Favourites
-    removeFavourites(chengefavourites:ChengeFavourites):Favourites
+    addFavourites(data:ChengeFavourites):Favourites
+    removeFavourites(data:ChengeFavourites):Favourites
 }
 
 input ChengeFavourites {

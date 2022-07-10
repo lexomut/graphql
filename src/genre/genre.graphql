@@ -12,7 +12,7 @@ type Query {
 
 type Mutation {
     createGenre(genre:CreateGenre):Genre
-    deleteGenre(id:ID!):ID
+    deleteGenre(id:ID!):Int
     updateGenre(id:ID!,genre:UpdateGenre):Genre
 }
 

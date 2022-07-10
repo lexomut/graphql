@@ -55,23 +55,34 @@ export class BandApi extends RESTDataSource {
         };
     }
 
-    async create(body: {}): Promise<any> {
-        if (!this.context.token) {
-            return;
-        }
-        const result = await this.post('/', body);
-        return {...result, id: result._id};
+    async create(body: {}): Promise<BandQl> {
+        const item:Band = await this.post('/', body);
+        return {
+            ...item,
+            id: item._id,
+            name: item.name,
+            origin: item.origin,
+            members: item.members.map( member => Object.assign(member,{id:member._id})),
+            website: item.website,
+            genres: item.genresIds,
+        };
     }
 
     async update(id: string, body: any): Promise<any> {
-        const result = await this.post('/' + id, body);
-        return {...result, id: result._id};
+        const item:Band = await this.put('/' + id, body);
+        return {
+            ...item,
+            id: item._id,
+            name: item.name,
+            origin: item.origin,
+            members: item.members.map( member => Object.assign(member,{id:member._id})),
+            website: item.website,
+            genres: item.genresIds,
+        };
     }
 
-    async delete(id: string): Promise<any> {
-        if (!this.context.token) {
-            return;
-        }
-        return await this.delete('/' + id);
+    async remove(id:string):Promise<any> {
+        const {deletedCount} = await this.delete('/'+id);
+        return deletedCount;
     }
 }

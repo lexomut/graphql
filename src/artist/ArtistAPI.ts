@@ -51,25 +51,17 @@ export class ArtistApi extends RESTDataSource {
     }
 
     async create(body:{}) {
-        if (!this.context.token) {
-            return; 
-        }
-        const result: Artist = await this.post('/',body);
-        return result;
+        const item: Artist = await this.post('/',body);
+        return Object.assign(item,{id:item._id,bands:item.bandsIds});
     }
 
-    async update(body:Artist) {
-        if (!this.context.token) {
-            return;
-        }
-        const result = this.post('/'+body._id,body);
-        return result;
+    async update(id:string, data:any) {
+        const item:Artist = await this.put('/'+id,data);
+        return Object.assign(item,{id:item._id,bands:item.bandsIds});
     }
 
-    async delete(id:string):Promise<any> {
-        if (!this.context.token) {
-            return;
-        }
-        return await this.delete('/'+id);
+    async remove(id:string):Promise<any> {
+        const {deletedCount} = await this.delete('/'+id);
+        return deletedCount;
     }
 }

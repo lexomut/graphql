@@ -11,25 +11,25 @@ export const artistResolver = {
         }
     },
     Mutation: {
-        async createArtist(parent: any, {data}: any, context: any) {
+        async createArtist(parent: any, {artist}: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSources.artistAPI.create(data);
+            const res =await context.dataSources.artistAPI.create(artist);
             return res;
         },
-        async updateArtist(parent: any, {id, data}: any, context: any) {
+        async updateArtist(parent: any, {id, artist}: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSource.artistAPI.update(id, data);
+            const res =await context.dataSources.artistAPI.update(id, artist);
             return res;
         },
         async deleteArtist(parent: any, data: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSources.artistAPI.delete(data);
+            const res = await context.dataSources.artistAPI.remove(data.id);
             return res;
         }
     },

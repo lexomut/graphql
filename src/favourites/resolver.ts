@@ -21,7 +21,7 @@ export const favouritesResolver = {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res = await context.dataSource.favouritesAPI.remove(data);
+            const res = await context.dataSources.favouritesAPI.remove(data);
             return res;
         },
 

@@ -12,25 +12,25 @@ export const trackResolver = {
         }
     },
     Mutation: {
-        async createTrack(parent: any, {data}: any, context: any) {
+        async createTrack(parent: any, {track}: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSources.trackAPI.create(data);
+            const res =await context.dataSources.trackAPI.create(track);
             return res;
         },
-        async updateTrack(parent: any, {id, data}: any, context: any) {
+        async updateTrack(parent: any, {id, track}: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSource.trackAPI.update(id, data);
+            const res =await context.dataSources.trackAPI.update(id, track);
             return res;
         },
         async deleteTrack(parent: any, data: any, context: any) {
             if (!context.token) {
                 throw new Error('no Token');
             }
-            const res =await context.dataSources.trackAPI.delete(data);
+            const res =await context.dataSources.trackAPI.remove(data.id);
             return res;
         }
     },
