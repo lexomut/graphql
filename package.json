@@ -1,0 +1,33 @@
+{
+  "name": "graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node --esm ./src/index.ts",
+    "start:dev": "nodemon",
+    "start:prod": "tsc && node ./build/index.js",
+    "lint": "eslint src --ext .ts,.js",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/uuid": "^8.3.4",
+    "eslint": "^8.18.0",
+    "nodemon": "^2.0.18",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3",
+    "uuid": "^8.3.2"
+  },
+  "dependencies": {
+    "@graphql-tools/load-files": "^6.6.0",
+    "apollo-datasource-rest": "^3.6.1",
+    "apollo-server": "^3.9.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "graphql": "^16.5.0",
+    "graphql-modules": "^2.1.0"
+  }
+}
